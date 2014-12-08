@@ -93,6 +93,12 @@ def main():
 	#cherrypy.checker.on = False
 	cherrypy.engine.autoreload.unsubscribe()
 
+	# TODO: maybe tweak number of threads
+	cherrypy.config.update({
+		'engine.autoreload.on': False,
+		'tools.proxy.on': True,  # retain the original address if we're being forwarded to
+	})
+
 	static_handler = cherrypy.tools.staticdir.handler(section='/', dir='%s/static' % os.getcwd())
 	cherrypy.tree.mount(static_handler, '/static')
 
