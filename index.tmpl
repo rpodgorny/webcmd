@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="static/jquery.mobile-1.4.5.min.css" />
+	<script src="static/jquery-2.1.1.min.js"></script>
+	<script src="static/jquery.mobile-1.4.5.min.js"></script>
+
+	<script>
+		ajax_success = function(data, textStatus, jqXHR) {
+			$("#output").val(data);
+		}
+
+		ajax_error = function(jqXHR, textStatus, errorThrown) {
+			alert(errorThrown);
+		}
+
+		$(document).ready(function() {
+			$('a').click(function(event) {
+				var $this = $(this);
+				var cmd_id = $this.attr('id');
+
+				$("#output").val('');
+
+				$.ajax({
+					url: 'run',
+					type: 'GET',
+					data: {cmd_id: cmd_id},
+					dataType: 'text',
+					success: ajax_success,
+					error: ajax_error,
+				});
+
+				event.preventDefault();
+			});
+		});
+	</script>
+</head>
+
+<body>
+<div data-role="page">
+<div role="main" class="ui-content jqm-content">
+
+% for line in lines:
+	<% grid_type = chr(ord('a') + len(line) - 2) %>
+	<div class="ui-grid-${grid_type}">
+	<% letter = 'a' %>
+	% for title, cmd_id in line:
+		<div class="ui-block-${letter}">
+		<% letter = chr(ord(letter) + 1) %>
+		<a href='run/?cmd_id=${cmd_id}' id='${cmd_id}' class='ui-btn ui-corner-all'>${title}</a>
+		</div>
+	% endfor
+	</div>
+% endfor
+
+<textarea id="output" readonly="1"></textarea>
+
+</div>
+</div>
+</body>
+</html>
