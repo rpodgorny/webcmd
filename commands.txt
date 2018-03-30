@@ -1,12 +1,12 @@
-Lampa dole on: sudo ./lampa_dole_on
-Lampa dole off: sudo ./lampa_dole_off
-Hi-fi on: sudo ./hifi_on
-Hi-fi off: sudo ./hifi_off
-Lampa nahore on: sudo ./lampa_nahore_on
-Lampa nahore off: sudo ./lampa_nahore_off
-Leds on: sudo ./led_on
-Leds off: sudo ./led_off
-Fan on: sudo ./vetrak_on
-Fan off: sudo ./vetrak_off
-volume down: ../irtoy/irtoy.py send ../irtoy/signals/aiwa_nsx_r41/volume_down
-volume up: ../irtoy/irtoy.py send ../irtoy/signals/aiwa_nsx_r41/volume_up
+Lampa dole on: sudo ../rfoutlets/lampa_dole_on
+Lampa dole off: sudo ../rfoutlets/lampa_dole_off
+Lampa nahore on: sudo ../rfoutlets/lampa_nahore_on
+Lampa nahore off: sudo ../rfoutlets/lampa_nahore_off
+Hi-fi on: sudo ../rfoutlets/hifi_on
+Hi-fi off: sudo ../rfoutlets/hifi_off
+Fan on: sudo ../rfoutlets/vetrani_on
+Fan off: sudo ../rfoutlets/vetrani_off
+#Leds on: sudo ../rfoutlets/led_on
+#Leds off: sudo ../rfoutlets/led_off
+#volume down: ../irtoy/irtoy.py send ../irtoy/signals/aiwa_nsx_r41/volume_down
+#volume up: ../irtoy/irtoy.py send ../irtoy/signals/aiwa_nsx_r41/volume_up
