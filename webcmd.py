@@ -54,6 +54,8 @@ def read_commands(fn):
 	ret = []
 	with open(fn, 'r') as f:
 		for line in f.readlines():
+			if line.startswith('#'):
+				continue
 			if not ':' in line:
 				raise Exception('malformed line: "%s"' % line)
 			title, command = line.split(':', maxsplit=1)
