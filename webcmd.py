@@ -16,6 +16,7 @@ import os
 import traceback
 import docopt
 import logging
+import sys
 
 
 class Server():
@@ -26,56 +27,40 @@ class Server():
 			cmd_id = len(self.cmd_map)
 			self.cmd_map[cmd_id] = cmd
 			cmds_ids.append((title, cmd_id))
-		#endfor
 
 		self.lines = []
 		cmds_ids_to_go = cmds_ids.copy()
 		while cmds_ids_to_go:
 			self.lines.append(cmds_ids_to_go[:2])
 			cmds_ids_to_go = cmds_ids_to_go[2:]
-		#endwhile
 
 		t = Template(filename='index.tmpl')
 		self.index_html = t.render(lines=self.lines)
-	#enddef
 
 	@cherrypy.expose
 	def index(self):
 		return self.index_html
-	#enddef
 
 	@cherrypy.expose
 	def run(self, cmd_id):
 		cmd = self.cmd_map[int(cmd_id)]
-
 		logging.debug('will execute "%s"' % cmd)
 		out = subprocess.check_output(cmd, shell=True)
-
 		cherrypy.response.headers['Content-Type']= 'text/plain'
 		return out
-	#enddef
-#endclass
 
 
 def read_commands(fn):
 	ret = []
-
 	with open(fn, 'r') as f:
 		for line in f.readlines():
 			if not ':' in line:
 				raise Exception('malformed line: "%s"' % line)
-			#endif
-
 			title, command = line.split(':', maxsplit=1)
 			title = title.strip()
 			command = command.strip()
-
 			ret.append((title, command))
-		#endfor
-	#endwith
-
 	return ret
-#enddef
 
 
 def main():
@@ -103,9 +88,8 @@ def main():
 	cherrypy.tree.mount(static_handler, '/static')
 
 	cherrypy.quickstart(Server(cmds))
-#enddef
+	return 0
 
 
 if __name__ == '__main__':
-	main()
-#endif
+	sys.exit(main())

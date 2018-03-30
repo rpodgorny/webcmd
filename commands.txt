@@ -6,5 +6,7 @@ Lampa nahore on: sudo ./lampa_nahore_on
 Lampa nahore off: sudo ./lampa_nahore_off
 Leds on: sudo ./led_on
 Leds off: sudo ./led_off
+Fan on: sudo ./vetrak_on
+Fan off: sudo ./vetrak_off
 volume down: ../irtoy/irtoy.py send ../irtoy/signals/aiwa_nsx_r41/volume_down
 volume up: ../irtoy/irtoy.py send ../irtoy/signals/aiwa_nsx_r41/volume_up
