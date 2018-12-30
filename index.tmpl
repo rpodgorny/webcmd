@@ -41,10 +41,10 @@
 <body class="w3-container">
 
 % for line in lines:
-  <div class="w3-container w3-cell-row">
+  <div class="w3-margin w3-cell-row">
   % for title, cmd_id in line:
     <div class="w3-container w3-cell">
-      <a href='run/?cmd_id=${cmd_id}' id='${cmd_id}' class='w3-button w3-block w3-blue'>${title}</a>
+      <a href='run/?cmd_id=${cmd_id}' id='${cmd_id}' class='w3-button w3-block w3-blue w3-xlarge'>${title}</a>
     </div>
   % endfor
   </div>
