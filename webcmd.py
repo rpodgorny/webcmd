@@ -51,7 +51,7 @@ def read_commands(fn):
 	with open(fn, 'r') as f:
 		for line in f.readlines():
 			line = line.strip()
-			if line.startswith('#'):
+			if not line or line.startswith('#'):
 				continue
 			if line == '---':
 				ret.append(row)
