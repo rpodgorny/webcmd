@@ -4,9 +4,8 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" href="static/jquery.mobile-1.4.5.min.css" />
+	<link rel="stylesheet" href="static/w3.css" />
 	<script src="static/jquery-2.1.1.min.js"></script>
-	<script src="static/jquery.mobile-1.4.5.min.js"></script>
 
 	<script>
 		ajax_success = function(data, textStatus, jqXHR) {
@@ -39,26 +38,21 @@
 	</script>
 </head>
 
-<body>
-<div data-role="page">
-<div role="main" class="ui-content jqm-content">
+<body class="w3-container">
 
 % for line in lines:
-	<% grid_type = chr(ord('a') + len(line) - 2) %>
-	<div class="ui-grid-${grid_type}">
-	<% letter = 'a' %>
-	% for title, cmd_id in line:
-		<div class="ui-block-${letter}">
-		<% letter = chr(ord(letter) + 1) %>
-		<a href='run/?cmd_id=${cmd_id}' id='${cmd_id}' class='ui-btn ui-corner-all'>${title}</a>
-		</div>
-	% endfor
-	</div>
+  <div class="w3-container w3-cell-row">
+  % for title, cmd_id in line:
+    <div class="w3-container w3-cell">
+      <a href='run/?cmd_id=${cmd_id}' id='${cmd_id}' class='w3-button w3-block w3-blue'>${title}</a>
+    </div>
+  % endfor
+  </div>
 % endfor
 
-<textarea id="output" readonly="1"></textarea>
+<div class="w3-container w3-cell-row">
+  <textarea id="output" readonly="1" class="w3-cell w3-block"></textarea>
+</div>
 
-</div>
-</div>
 </body>
 </html>

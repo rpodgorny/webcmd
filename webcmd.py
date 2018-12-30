@@ -7,13 +7,12 @@ Usage:
   webcmd --port=<port>
 '''
 
-__version__ = '0.0'
+__version__ = '1.0'
 
 import cherrypy
 from mako.template import Template
 import subprocess
 import os
-import traceback
 import docopt
 import logging
 import sys
@@ -22,20 +21,16 @@ import sys
 class Server():
 	def __init__(self, cmds):
 		self.cmd_map = {}
-		cmds_ids = []
-		for title, cmd in cmds:
-			cmd_id = len(self.cmd_map)
-			self.cmd_map[cmd_id] = cmd
-			cmds_ids.append((title, cmd_id))
-
-		self.lines = []
-		cmds_ids_to_go = cmds_ids.copy()
-		while cmds_ids_to_go:
-			self.lines.append(cmds_ids_to_go[:2])
-			cmds_ids_to_go = cmds_ids_to_go[2:]
-
+		lines = []
+		for row in cmds:
+			line = []
+			for title, cmd in row:
+				cmd_id = len(self.cmd_map)
+				self.cmd_map[cmd_id] = cmd
+				line.append((title, cmd_id))
+			lines.append(line)
 		t = Template(filename='index.tmpl')
-		self.index_html = t.render(lines=self.lines)
+		self.index_html = t.render(lines=lines)
 
 	@cherrypy.expose
 	def index(self):
@@ -46,22 +41,30 @@ class Server():
 		cmd = self.cmd_map[int(cmd_id)]
 		logging.debug('will execute "%s"' % cmd)
 		out = subprocess.check_output(cmd, shell=True)
-		cherrypy.response.headers['Content-Type']= 'text/plain'
+		cherrypy.response.headers['Content-Type'] = 'text/plain'
 		return out
 
 
 def read_commands(fn):
 	ret = []
+	row = []
 	with open(fn, 'r') as f:
 		for line in f.readlines():
+			line = line.strip()
 			if line.startswith('#'):
 				continue
-			if not ':' in line:
+			if line == '---':
+				ret.append(row)
+				row = []
+				continue
+			if ':' not in line:
 				raise Exception('malformed line: "%s"' % line)
 			title, command = line.split(':', maxsplit=1)
 			title = title.strip()
 			command = command.strip()
-			ret.append((title, command))
+			row.append((title, command))
+	if row:
+		ret.append(row)
 	return ret
 
 
