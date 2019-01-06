@@ -27,7 +27,8 @@ class Server():
 			for title, cmd in row:
 				cmd_id = len(self.cmd_map)
 				self.cmd_map[cmd_id] = cmd
-				line.append((title, cmd_id))
+				confirm = int(title.endswith('!'))
+				line.append((title, cmd_id, confirm))
 			lines.append(line)
 		t = Template(filename='index.tmpl')
 		self.index_html = t.render(lines=lines)

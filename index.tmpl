@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="static/w3.css" />
   <script src="static/jquery-2.1.1.min.js"></script>
   <script>
@@ -11,14 +11,16 @@
         var $this = $(this);
         var cmd_id = $this.attr('id');
         $("#output").val('');
-        $.ajax({
-          url: 'run',
-          type: 'GET',
-          data: {cmd_id: cmd_id},
-          dataType: 'text',
-          success: (data, textStatus, jqXHR) => $("#output").val(data),
-          error: (jqXHR, textStatus, errorThrown) => alert(errorThrown),
-        });
+        if ($this.attr('x-confirm') != 1 || alert('fakt?')) {
+          $.ajax({
+            url: 'run',
+            type: 'GET',
+            data: {cmd_id: cmd_id},
+            dataType: 'text',
+            success: (data, textStatus, jqXHR) => $("#output").val(data),
+            error: (jqXHR, textStatus, errorThrown) => alert(errorThrown),
+          });
+        }
         event.preventDefault();
       });
     });
@@ -29,9 +31,9 @@
 
 % for line in lines:
   <div class="w3-margin w3-cell-row">
-  % for title, cmd_id in line:
+  % for title, cmd_id, confirm in line:
     <div class="w3-container w3-cell">
-      <a href='run/?cmd_id=${cmd_id}' id='${cmd_id}' class='w3-button w3-block w3-blue w3-xlarge'>${title}</a>
+      <a href='run/?cmd_id=${cmd_id}' id='${cmd_id}' class='w3-button w3-block w3-blue w3-xlarge' x-confirm='${confirm}'>${title}</a>
     </div>
   % endfor
   </div>
