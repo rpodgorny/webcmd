@@ -11,7 +11,7 @@
         var $this = $(this);
         var cmd_id = $this.attr('id');
         $("#output").val('');
-        if ($this.attr('x-confirm') != 1 || alert('fakt?')) {
+        if ($this.attr('x-confirm') != 1 || confirm('fakt?')) {
           $.ajax({
             url: 'run',
             type: 'GET',
