@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="static/w3.css" />
+  <link rel="stylesheet" href="static/bulma.min.css" />
   <script src="static/jquery-2.1.1.min.js"></script>
   <script>
     $(document).ready(function() {
@@ -27,21 +27,23 @@
   </script>
 </head>
 
-<body class="w3-container">
+<body class="">
+<section class="section">
 
 % for line in lines:
-  <div class="w3-margin w3-cell-row">
+  <div class="columns">
   % for title, cmd_id, confirm in line:
-    <div class="w3-container w3-cell">
-      <a href='run/?cmd_id=${cmd_id}' id='${cmd_id}' class='w3-button w3-block w3-blue w3-xlarge' x-confirm='${confirm}'>${title}</a>
-    </div>
+    <div class="column">
+      <a href='run/?cmd_id=${cmd_id}' id='${cmd_id}' class='box button is-link is-large' x-confirm='${confirm}'>${title}</a>
+	</div>
   % endfor
   </div>
 % endfor
 
-<div class="w3-container w3-cell-row">
-  <textarea id="output" readonly="1" class="w3-cell w3-block" style="height: 300px"></textarea>
+<div class="level">
+  <textarea id="output" readonly="1" class="level-item box" style="height: 300px"></textarea>
 </div>
 
+</section>
 </body>
 </html>
